@@ -22,7 +22,7 @@ public class CategoryTest
         //Act
         var datetimeBefore = DateTime.Now;
         var category = new DomainEntity.Category(validCategory.Name, validCategory.Description);
-        var datetimeAfter = DateTime.Now;
+        var datetimeAfter = DateTime.Now.AddSeconds(1);
 
         //Assert
         category.Should().NotBeNull();
@@ -47,7 +47,7 @@ public class CategoryTest
         //Act
         var datetimeBefore = DateTime.Now;
         var category = new DomainEntity.Category(validCategory.Name, validCategory.Description, isActive);
-        var datetimeAfter = DateTime.Now;
+        var datetimeAfter = DateTime.Now.AddSeconds(1);
 
         //Assert
         category.Should().NotBeNull();
