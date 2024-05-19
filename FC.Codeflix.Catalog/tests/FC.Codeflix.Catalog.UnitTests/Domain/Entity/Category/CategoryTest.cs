@@ -76,17 +76,17 @@ public class CategoryTest
 
     }
 
+
     [Fact(DisplayName = nameof(InstantiateErrorWhenDescriptionIsNull))]
     [Trait("Domain", "Category - Aggregates")]
-
     public void InstantiateErrorWhenDescriptionIsNull()
     {
         Action action =
             () => new DomainEntity.Category("Category Name", null!);
         var exception = Assert.Throws<EntityValidationException>(action);
         Assert.Equal("Description should not be empty or null", exception.Message);
-
     }
+
     // rules:
     // Name must have at least 3 characters
     [Theory(DisplayName = nameof(InstantiateErrorWhenNameIsLessThan3Characters))]
@@ -100,9 +100,71 @@ public class CategoryTest
         Action action =
             () => new DomainEntity.Category(invalidName, "Category Ok Description");
         var exception = Assert.Throws<EntityValidationException>(action);
-        Assert.Equal("Name should be at leats 3 characters long", exception.Message);
+        Assert.Equal("Name should be at least 3 characters long", exception.Message);
+    }
+
+    // name must have a maximum of 255 characters
+    [Fact(DisplayName = nameof(InstantiateErrorWhenNameIsGreaterThan255Characters))]
+    [Trait("Domain", "Category - Aggregates")]
+
+    public void InstantiateErrorWhenNameIsGreaterThan255Characters()
+    {
+      var invalidName= string.Join(null,Enumerable.Range(1, 256).Select(_ => "a").ToArray());
+        Action action =
+            () => new DomainEntity.Category(invalidName, "Category Ok Description");
+        var exception = Assert.Throws<EntityValidationException>(action);
+        Assert.Equal("Name should be or less or equal 255 characters long", exception.Message.Trim());
 
     }
-    // name must have a maximum of 255 characters
     // description must have a maximum of 10_000 characters
+    [Fact(DisplayName = nameof(InstantiateErrorWhenDescriptionIsGreaterThan10_000Characters))]
+    [Trait("Domain", "Category - Aggregates")]
+    public void InstantiateErrorWhenDescriptionIsGreaterThan10_000Characters()
+    {
+        var invalidDescription = new string('a', 10_001); 
+        Action action =
+            () => new DomainEntity.Category("Category Name", invalidDescription);
+        var exception = Assert.Throws<EntityValidationException>(action);
+        Assert.Equal("Description should be less or equal 10_000 characters long", exception.Message.Trim());
+    }
+
+    [Fact(DisplayName = nameof(Activate))]
+    [Trait("Domain", "Category - Aggregates")]
+
+    public void Activate()
+    {
+        //Arrange
+        var validData = new
+        {
+            Name = "category name",
+            Description = "category description"
+        };
+
+        //Act
+
+        var category = new DomainEntity.Category(validData.Name, validData.Description, false);
+        category.Activate();
+        //Assert
+        Assert.True(category.IsActive);
+    }
+
+    [Fact(DisplayName = nameof(Deactivate))]
+    [Trait("Domain", "Category - Aggregates")]
+
+    public void Deactivate()
+    {
+        //Arrange
+        var validData = new
+        {
+            Name = "category name",
+            Description = "category description"
+        };
+
+        //Act
+
+        var category = new DomainEntity.Category(validData.Name, validData.Description, true);
+        category.Deactivate();
+        //Assert
+        Assert.False(category.IsActive);
+    }
 }
