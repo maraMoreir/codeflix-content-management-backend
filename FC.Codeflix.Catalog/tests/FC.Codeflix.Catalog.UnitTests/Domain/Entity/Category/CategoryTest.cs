@@ -91,10 +91,7 @@ public class CategoryTest
     // Name must have at least 3 characters
     [Theory(DisplayName = nameof(InstantiateErrorWhenNameIsLessThan3Characters))]
     [Trait("Domain", "Category - Aggregates")]
-    [InlineData("1")]
-    [InlineData("12")]
-    [InlineData("a")]
-    [InlineData("ca")]
+    [MemberData(nameof(GetNamesWithLessThan3Characteres), parameters:10)]
     public void InstantiateErrorWhenNameIsLessThan3Characters(string invalidName)
     {
         var ValidCategory = _categoryTestFixture.GetValidCategory();
@@ -103,6 +100,24 @@ public class CategoryTest
 
         action.Should().Throw<EntityValidationException>()
             .WithMessage("Name should be at least 3 characters long");
+    }
+
+    public static IEnumerable<object[]> GetNamesWithLessThan3Characteres(int numberOfTestes)
+    {
+        var fixture = new CategoryTestFixture();
+        for(int i = 0; i < numberOfTestes; i ++)
+        {
+            var isOdd = i % 2 == 1;
+            yield return new object[] {
+                fixture.GetValidCategoryName()[..(isOdd ? 1 : 2)]
+            };
+        }
+
+        yield return new object[] { "1" };
+        yield return new object[] { "12" };
+        yield return new object[] { "a" };
+        yield return new object[] { "ca" };
+        yield return new object[] { "ux" };
     }
 
     // name must have a maximum of 255 characters
