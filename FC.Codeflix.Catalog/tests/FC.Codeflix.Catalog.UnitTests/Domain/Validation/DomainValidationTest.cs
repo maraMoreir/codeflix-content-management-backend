@@ -1,8 +1,6 @@
 ﻿using Bogus;
 using FC.Codeflix.Catalog.Domain.Exceptions;
-using FC.Codeflix.Catalog.Domain.Validation;
 using FluentAssertions;
-using System.Security.Cryptography.X509Certificates;
 using Xunit;
 
 namespace FC.Codeflix.Catalog.UnitTests.Domain.Validation;
