@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Moq;
 using Xunit;
+using UseCases = FC.Codeflix.Catalog.Application.UseCases.CreateCategory;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.CreateCategory
 {
