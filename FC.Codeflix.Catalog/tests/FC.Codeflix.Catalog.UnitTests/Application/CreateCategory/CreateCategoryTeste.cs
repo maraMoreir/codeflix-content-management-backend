@@ -12,7 +12,7 @@ namespace FC.Codeflix.Catalog.UnitTests.Application.CreateCategory
         [Trait("Application", "CreateCategory - Use Cases")]
         public async void CreateCategory()
         {
-            var repositoryMock = new Mock<ICategoryRepository>();
+            var repositoryMock = new Mock<Catalog.Domain.Repository.ICategoryRepository>();
             var unitOfWorkMock = new Mock<IUnitOfWork>();
             var useCase = new UseCases.CreateCategory(
                 repositoryMock.Object,
@@ -28,7 +28,7 @@ namespace FC.Codeflix.Catalog.UnitTests.Application.CreateCategory
             var output = await useCase.Handle(input, CancellationToken.None);
 
             repositoryMock.Verify(
-                repository => repository.Create(
+                repository => repository.Insert(
                     It.IsAny<Category>(),
                     It.IsAny<CancellationToken>()
                 ),
