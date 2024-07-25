@@ -1,4 +1,6 @@
-﻿using FC.Codeflix.Catalog.Domain.Entity;
+﻿using FC.Codeflix.Catalog.Application.Interfaces;
+using FC.Codeflix.Catalog.Domain.Entity;
+using FC.Codeflix.Catalog.Domain.Repository;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -12,7 +14,7 @@ namespace FC.Codeflix.Catalog.UnitTests.Application.CreateCategory
         [Trait("Application", "CreateCategory - Use Cases")]
         public async void CreateCategory()
         {
-            var repositoryMock = new Mock<Catalog.Domain.Repository.ICategoryRepository>();
+            var repositoryMock = new Mock<ICategoryRepository>();
             var unitOfWorkMock = new Mock<IUnitOfWork>();
             var useCase = new UseCases.CreateCategory(
                 repositoryMock.Object,
