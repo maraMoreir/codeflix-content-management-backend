@@ -47,10 +47,6 @@ public class CreateCategoryTestFixture : BaseFixture
         => new();
 
     public Mock<IUnitOfWork> GetUnitOfWorkMock()
-    {
-        var mock = new Mock<IUnitOfWork>();
-        mock.Setup(uow => uow.Commit(It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
-        return mock;
-    }
+        => new();
+
 }
