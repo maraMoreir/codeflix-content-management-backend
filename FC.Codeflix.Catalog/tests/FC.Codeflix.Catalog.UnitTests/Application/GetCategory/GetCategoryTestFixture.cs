@@ -37,6 +37,7 @@ public class GetCategoryTestFixture : BaseFixture
     public Category GetValidCategory()
         => new(
             GetValidCategoryName(),
-            GetValidCategoryDescription());
+            GetValidCategoryDescription()
+    );
 }
 
