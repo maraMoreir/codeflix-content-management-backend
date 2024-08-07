@@ -1,7 +1,7 @@
 ﻿using Moq;
 using Xunit;
 using FluentAssertions;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.GetCategory;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.GetCategory;
 
