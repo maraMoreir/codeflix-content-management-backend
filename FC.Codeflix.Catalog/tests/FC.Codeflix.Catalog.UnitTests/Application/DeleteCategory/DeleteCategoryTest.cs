@@ -1,5 +1,5 @@
 ﻿using Xunit;
-using FC.Codeflix.Catalog.Application.UseCases.Category.DeleteCategory;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.DeleteCategory;
 using Moq;
 using FluentAssertions;
 
@@ -25,8 +25,8 @@ public class DeleteCategoryTest
             categoryExample.Id,
         It.IsAny<CancellationToken>())
         ).ReturnsAsync(categoryExample);
-        var input = new DeleteCategoryInput(categoryExample.Id);
-        var useCase = new DeleteCategory(
+        var input = new UseCase.DeleteCategoryInput(categoryExample.Id);
+        var useCase = new UseCase.DeleteCategory(
             repositoryMock.Object,
             unitOfWorkMock.Object
         );
@@ -38,11 +38,41 @@ public class DeleteCategoryTest
             It.IsAny<CancellationToken>()
         ), Times.Once);
         repositoryMock.Verify(x => x.Delete(
-           categoryExample.Id,
+           categoryExample,
            It.IsAny<CancellationToken>()
        ), Times.Once);
         unitOfWorkMock.Verify(x => x.Commit(
             It.IsAny<CancellationToken>()
         ), Times.Once());
+    }
+
+    [Fact(DisplayName = nameof(ThrowWhenCategoryNotFound))]
+    [Trait("Application", "DeleteCategory - UseCases")]
+    public async Task ThrowWhenCategoryNotFound()
+    {
+        var repositoryMock = _fixture.GetRepositoryMock();
+        var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
+        var exampleGuid = Guid.NewGuid();
+        repositoryMock.Setup(x => x.Get(
+            exampleGuid,
+        It.IsAny<CancellationToken>())
+        ).ThrowsAsync(
+            new DirectoryNotFoundException($"Category '{exampleGuid}' ")
+        );
+        var input = new UseCase.DeleteCategoryInput(exampleGuid);
+        var useCase = new UseCase.DeleteCategory(
+            repositoryMock.Object,
+            unitOfWorkMock.Object
+        );
+
+        var task = async ()
+            => await useCase.Handle(input, CancellationToken.None);
+        await task.Should().ThrowAsync<DirectoryNotFoundException>();
+
+        repositoryMock.Verify(x => x.Get(
+            exampleGuid,
+            It.IsAny<CancellationToken>()
+        ), Times.Once);
+
     }
 }
