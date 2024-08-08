@@ -12,12 +12,11 @@ namespace FC.Codeflix.Catalog.UnitTests.Application.UpdateCategory;
 public class UpdateCategoryTestFixtureCollection 
     : ICollectionFixture<UpdateCategoryTestFixture>
 { }
-public class UpdateCategoryTestFixture 
-    : BaseFixture
+public class UpdateCategoryTestFixture : BaseFixture
 {
-    public Mock<ICategoryRepository> GetRepositoryMock()
-=> new();
 
+    public Mock<ICategoryRepository> GetRepositoryMock()
+        => new();
     public Mock<IUnitOfWork> GetUnitOfWorkMock()
         => new();
 
