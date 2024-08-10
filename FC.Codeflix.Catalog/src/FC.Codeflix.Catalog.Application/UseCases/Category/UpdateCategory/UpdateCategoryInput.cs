@@ -18,7 +18,7 @@ public class UpdateCategoryInput
         bool isActive
     )
     {
-        Id = Id;
+        Id = id;
         Name = name;
         Description = description;
         IsActive = isActive;
