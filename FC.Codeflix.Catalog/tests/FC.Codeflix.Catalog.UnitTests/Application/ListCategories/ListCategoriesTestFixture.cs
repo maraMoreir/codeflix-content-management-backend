@@ -1,5 +1,4 @@
-﻿using FC.Codeflix.Catalog.Application.Interfaces;
-using FC.Codeflix.Catalog.Domain.Entity;
+﻿using FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Domain.Repository;
 using FC.Codeflix.Catalog.UnitTests.Common;
 using Moq;
@@ -7,6 +6,7 @@ using Xunit;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.ListCategories;
 
+[CollectionDefinition(nameof(ListCategoriesTestFixture))]
 public class ListCategoriesTestFixtureCollection
     : ICollectionFixture<ListCategoriesTestFixture>
 { }
