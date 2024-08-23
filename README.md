@@ -38,5 +38,6 @@ The project architecture is based on decoupled microservices, which communicate 
 
 ### Prerequisites
 - [Docker](https://www.docker.com/)
+- [C# .NET](https://dotnet.microsoft.com/) (for backend)
 - [Node.js](https://nodejs.org/) (for frontend)
 - [Go](https://golang.org/) (for video encoder)
