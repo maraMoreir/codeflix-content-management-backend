@@ -2,15 +2,15 @@
 using Xunit;
 using FluentAssertions;
 using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
-using FC.Codeflix.Catalog.Application.Excpetions;
+using FC.Codeflix.Catalog.Application.Excpetion;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.GetCategory;
+namespace FC.Codeflix.Catalog.UnitTests.Application.Category.GetCategory;
 
 [Collection(nameof(GetCategoryTestFixture))]
 public class GetCategoryTest
 {
     private readonly GetCategoryTestFixture _fixture;
-    
+
     public GetCategoryTest(GetCategoryTestFixture fixture)
         => _fixture = fixture;
 
@@ -60,7 +60,7 @@ public class GetCategoryTest
         var useCase = new UseCase.GetCategory(repositoryMock.Object);
 
         var task = async ()
-            =>  await useCase.Handle(input, CancellationToken.None);
+            => await useCase.Handle(input, CancellationToken.None);
 
         await task.Should().ThrowAsync<NotFoundException>();
         repositoryMock.Verify(x => x.Get(

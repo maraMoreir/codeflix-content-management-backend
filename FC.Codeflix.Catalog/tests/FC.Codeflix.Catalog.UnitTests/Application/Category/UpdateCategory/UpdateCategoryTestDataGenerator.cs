@@ -1,13 +1,10 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
-using FC.Codeflix.Catalog.UnitTests.Application.CreateCategory;
-
-namespace FC.Codeflix.Catalog.UnitTests.Application.UpdateCategory;
+﻿namespace FC.Codeflix.Catalog.UnitTests.Application.Category.UpdateCategory;
 public class UpdateCategoryTestDataGenerator
 {
     public static IEnumerable<object[]> GetCategoriesToUpdate(int times = 10)
     {
         var fixture = new UpdateCategoryTestFixture();
-        for(int indice = 0; indice < times; indice++)
+        for (int indice = 0; indice < times; indice++)
         {
             var exampleCategory = fixture.GetExampleCategory();
             var exampleInput = fixture.GetValidInput(exampleCategory.Id);

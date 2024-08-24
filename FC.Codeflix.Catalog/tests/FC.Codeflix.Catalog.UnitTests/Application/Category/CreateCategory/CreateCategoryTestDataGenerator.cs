@@ -1,4 +1,6 @@
-﻿namespace FC.Codeflix.Catalog.UnitTests.Application.CreateCategory;
+﻿using Bogus.DataSets;
+
+namespace FC.Codeflix.Catalog.UnitTests.Application.Category.CreateCategory;
 public class CreateCategoryTestDataGenerator
 {
     public static IEnumerable<object[]> GetInvalidInputs(int times = 12)
@@ -14,7 +16,7 @@ public class CreateCategoryTestDataGenerator
                 case 0:
                     invalidInputsList.Add(new object[] {
                         fixture.GetInvalidInputShortName(),
-                        "Name should be at least 3 characters long",
+                        "Name should be at least 3 characters long"
                     });
                     break;
                 case 1:
@@ -24,7 +26,7 @@ public class CreateCategoryTestDataGenerator
                     });
                     break;
                 case 2:
-                    invalidInputsList.Add(new object[]{
+                    invalidInputsList.Add(new object[] {
                         fixture.GetInvalidInputCategoryNull(),
                         "Description should not be empty or null"
                     });
@@ -32,13 +34,14 @@ public class CreateCategoryTestDataGenerator
                 case 3:
                     invalidInputsList.Add(new object[] {
                         fixture.GetInvalidInputTooLongDescription(),
-                        "Description should be less or equal 10_000 characters long"
-                    });
+                        "Description should be less or equal 10_000 characters long"                    });
                     break;
                 default:
                     break;
             }
         }
+
         return invalidInputsList;
     }
 }
+ 

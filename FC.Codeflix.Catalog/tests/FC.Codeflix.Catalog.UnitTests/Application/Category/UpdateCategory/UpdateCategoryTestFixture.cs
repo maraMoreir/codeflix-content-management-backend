@@ -1,14 +1,14 @@
 ﻿using FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
-using FC.Codeflix.Catalog.UnitTests.Application.Common;
+using FC.Codeflix.Catalog.UnitTests.Application.Category.Common;
 using Xunit;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.UpdateCategory;
+namespace FC.Codeflix.Catalog.UnitTests.Application.Category.UpdateCategory;
 
 [CollectionDefinition(nameof(UpdateCategoryTestFixture))]
-public class UpdateCategoryTestFixtureCollection 
+public class UpdateCategoryTestFixtureCollection
     : ICollectionFixture<UpdateCategoryTestFixture>
 { }
-public class UpdateCategoryTestFixture 
+public class UpdateCategoryTestFixture
     : CategoryUseCasesBaseFixture
 {
     public UpdateCategoryInput GetValidInput(Guid? id = null)
@@ -18,12 +18,12 @@ public class UpdateCategoryTestFixture
             GetValidCategoryDescription(),
             getRandomBoolean());
     public UpdateCategoryInput GetInvalidInputShortName()
-        {
-            var invalidInputShortName = GetValidInput();
-            invalidInputShortName.Name =
-            invalidInputShortName.Name.Substring(0, 2);
-            return invalidInputShortName;
-        }
+    {
+        var invalidInputShortName = GetValidInput();
+        invalidInputShortName.Name =
+        invalidInputShortName.Name.Substring(0, 2);
+        return invalidInputShortName;
+    }
 
     public UpdateCategoryInput GetInvalidInputTooLongName()
     {
