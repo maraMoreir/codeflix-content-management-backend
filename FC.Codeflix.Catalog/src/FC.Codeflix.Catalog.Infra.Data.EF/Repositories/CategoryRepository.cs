@@ -26,11 +26,13 @@ public class CategoryRepository
         var catetory = await _categories.FindAsync(
                     new object[] { id },
                     cancellationToken
-                );
+        );
         NotFoundException.ThrowIfNull(catetory, $"Categoty '{id}' not found.");
         return catetory!;
     }
-
+    public Task Update(Category aggregate, CancellationToken cancellationToken)
+        => Task.FromResult(_categories.Update(aggregate));
+    
     public Task Delete(Category aggregate, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
@@ -38,11 +40,6 @@ public class CategoryRepository
 
 
     public Task<SearchOutput<Category>> Search(SearchInput input, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task Update(Category aggregate, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
