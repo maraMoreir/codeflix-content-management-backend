@@ -36,11 +36,16 @@ public class CategoryRepositoryTestFixture
         => new Random().NextDouble() < 0.5;
 
     public Category GetExampleCategory()
-    => new(
+        => new(
         GetValidCategoryName(),
         GetValidCategoryDescription(),
         getRandomBoolean()
     );
+
+    public List<Category> GetExampleCategoriesList(int length = 10)
+        => Enumerable.Range(1, length)
+            .Select(_ => GetExampleCategory())
+            .ToList();
 
     public CodeflixCatalogDbContext CreateDbContext()
         => new (

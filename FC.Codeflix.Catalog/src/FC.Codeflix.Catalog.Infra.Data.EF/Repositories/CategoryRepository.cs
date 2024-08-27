@@ -17,14 +17,16 @@ public class CategoryRepository
     public async Task Insert(
         Category aggregate, 
         CancellationToken cancellationToken)
-        => await _categories.AddAsync(aggregate, cancellationToken);
+            => await _categories.AddAsync(aggregate, cancellationToken);
+
+    public async Task<Category> Get(
+        Guid id, CancellationToken cancellationToken)
+            => await _categories.FindAsync(
+                new object[] { id },
+                cancellationToken
+            );
 
     public Task Delete(Category aggregate, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<Category> Get(Guid id, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
