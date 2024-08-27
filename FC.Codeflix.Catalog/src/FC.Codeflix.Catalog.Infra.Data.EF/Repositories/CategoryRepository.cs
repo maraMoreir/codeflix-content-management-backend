@@ -1,4 +1,5 @@
-﻿using FC.Codeflix.Catalog.Domain.Entity;
+﻿using FC.Codeflix.Catalog.Application.Excpetion;
+using FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Domain.Repository;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using Microsoft.EntityFrameworkCore;
@@ -21,10 +22,14 @@ public class CategoryRepository
 
     public async Task<Category> Get(
         Guid id, CancellationToken cancellationToken)
-            => await _categories.FindAsync(
-                new object[] { id },
-                cancellationToken
-            );
+    {
+        var catetory = await _categories.FindAsync(
+                    new object[] { id },
+                    cancellationToken
+                );
+        NotFoundException.ThrowIfNull(catetory, $"Categoty '{id}' not found.");
+        return catetory!;
+    }
 
     public Task Delete(Category aggregate, CancellationToken cancellationToken)
     {
