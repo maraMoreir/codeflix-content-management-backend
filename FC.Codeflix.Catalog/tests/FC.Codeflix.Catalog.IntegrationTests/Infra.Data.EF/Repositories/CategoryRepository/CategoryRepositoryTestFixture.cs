@@ -1,5 +1,7 @@
 ﻿using FC.Codeflix.Catalog.Domain.Entity;
+using FC.Codeflix.Catalog.Infra.Data.EF;
 using FC.Codeflix.Catalog.IntegrationTests.Base;
+using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace FC.Codeflix.Catalog.IntegrationTests.Infra.Data.EF.Repositories.CategoryRepository;
@@ -40,5 +42,12 @@ public class CategoryRepositoryTestFixture
         getRandomBoolean()
     );
 
-    public
- }
+    public CodeflixCatalogDbContext CreateDbContext()
+        => new (
+            new DbContextOptionsBuilder<CodeflixCatalogDbContext>()
+            .UseInMemoryDatabase("integration-tests-db")
+            .Options
+        );
+   
+    
+}
