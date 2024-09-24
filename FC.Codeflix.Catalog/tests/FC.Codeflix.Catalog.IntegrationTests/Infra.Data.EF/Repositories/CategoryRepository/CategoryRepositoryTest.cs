@@ -180,4 +180,48 @@ public class CategoryRepositoryTest
         output.Total.Should().Be(0);
         output.Items.Should().HaveCount(0);
     }
+
+    [Theory(DisplayName = nameof(SearchReturnsPaginated))]
+    [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+    [InlineData(10, 1, 5, 5)]
+    [InlineData(10, 2, 5, 5)]
+    [InlineData(7, 2, 5, 2)]
+    [InlineData(7, 3, 5, 0)]
+    public async Task SearchReturnsPaginated(
+        int quantityCategoryToGenerate,
+        int page,
+        int perPage,
+        int expectedQuantityItems
+
+        )
+    {
+        CodeflixCatalogDbContext dbContext = _fixture.CreateDbContext();
+        var exampleCategoriesList = _fixture.GetExampleCategoriesList(quantityCategoryToGenerate);
+        await dbContext.AddRangeAsync(exampleCategoriesList);
+        await dbContext.SaveChangesAsync(CancellationToken.None);
+        var categoryRepository = new Repository.CategoryRepository(dbContext);
+        var SearchInput = new SearchInput(page, perPage, "", "", SearchOrder.Asc);
+
+        var output = await categoryRepository.Search(SearchInput, CancellationToken.None);
+
+        output.Should().NotBeNull();
+        output.Items.Should().NotBeNull();
+        output.CurrentPage.Should().Be(SearchInput.Page);
+        output.PerPage.Should().Be(SearchInput.PerPage);
+        output.Total.Should().Be(quantityCategoryToGenerate);
+        output.Items.Should().HaveCount(expectedQuantityItems);
+        foreach (Category outputItem in output.Items)
+        {
+            var exampleItem = exampleCategoriesList.Find(
+                category => category.Id == outputItem.Id
+                );
+
+            exampleItem.Should().NotBeNull();
+            outputItem!.Name.Should().Be(exampleItem!.Name);
+            outputItem.Id.Should().Be(exampleItem.Id);
+            outputItem.Description.Should().Be(exampleItem.Description);
+            outputItem.IsActive.Should().Be(exampleItem.IsActive);
+            outputItem.CreatedAt.Should().Be(exampleItem.CreatedAt);
+        }
+    }
 }
