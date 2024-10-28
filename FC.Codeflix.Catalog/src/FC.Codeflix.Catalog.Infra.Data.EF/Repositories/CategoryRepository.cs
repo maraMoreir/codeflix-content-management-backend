@@ -27,7 +27,7 @@ public class CategoryRepository
                     x => x.Id == id ,
                     cancellationToken
         );
-        NotFoundException.ThrowIfNull(catetory, $"Categoty '{id}' not found.");
+        NotFoundException.ThrowIfNull(catetory, $"Category '{id}' not found.");
         return catetory!;
     }
     public Task Update(Category aggregate, CancellationToken cancellationToken)
