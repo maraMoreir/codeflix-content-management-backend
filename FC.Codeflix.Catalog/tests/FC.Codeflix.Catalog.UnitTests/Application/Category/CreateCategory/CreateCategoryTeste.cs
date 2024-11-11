@@ -3,10 +3,6 @@ using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Domain.Exceptions;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 using UseCases = FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
 
@@ -120,7 +116,6 @@ public class CreateCategoryTest
         output.Id.Should().NotBeEmpty();
         output.CreatedAt.Should().NotBeSameDateAs(default);
     }
-
     [Theory(DisplayName = nameof(ThrowWhenCantInstantiateCategory))]
     [Trait("Application", "CreateCategory - Use Cases")]
     [MemberData(
@@ -128,6 +123,7 @@ public class CreateCategoryTest
         parameters: 24,
         MemberType = typeof(CreateCategoryTestDataGenerator)
     )]
+
     public async void ThrowWhenCantInstantiateCategory(
         CreateCategoryInput input,
         string exceptionMessage
