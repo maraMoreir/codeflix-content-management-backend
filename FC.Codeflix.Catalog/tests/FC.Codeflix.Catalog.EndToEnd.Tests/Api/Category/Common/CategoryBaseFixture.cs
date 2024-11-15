@@ -4,6 +4,14 @@ namespace FC.Codeflix.Catalog.EndToEnd.Tests.Api.Category.Common;
 public class CategoryBaseFixture
     : BaseFixture
 {
+    public CategoryPersistence Persistence;
+
+    public CategoryBaseFixture()
+        : base()
+    {
+        Persistence = new CategoryPersistence(CreateDbContext());
+    }
+
     public string GetValidCategoryName()
     {
         var categoryName = "";
