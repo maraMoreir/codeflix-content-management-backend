@@ -1,31 +1,35 @@
-﻿using Microsoft.VisualStudio.TestPlatform.TestHost;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
+using System.Net.Http;
 using FC.Codeflix.Catalog.Infra.Data.EF;
-using Microsoft.EntityFrameworkCore;
 using Bogus;
+using Microsoft.EntityFrameworkCore;
+using FC.Codeflix.Catalog.Api;
 
-namespace FC.Codeflix.Catalog.EndToEnd.Tests.Base;
-public class BaseFixture
+namespace FC.Codeflix.Catalog.EndToEnd.Tests.Base
 {
-    protected Faker Faker { get; set; }
-    public CustomWebApplicationFactory<Program> WebAppFactory { get; set; }
-    public HttpClient HttpClient { get; set; }
-    public ApiClient ApiClient { get; set; }
-
-    public BaseFixture()
+    public class BaseFixture
     {
-        Faker = new Faker("pt_BR");
-        WebAppFactory = new CustomWebApplicationFactory<Program>();
-        HttpClient = new WebAppFactory.CreateClient();
-        ApiClient = new ApiClient(HttpClient);
-    }
+        protected Faker Faker { get; set; }
+        public CustomWebApplicationFactory<Program> WebAppFactory { get; set; }
+        public HttpClient HttpClient { get; set; }
+        public ApiClient ApiClient { get; set; }
 
-    public CodeflixCatalogDbContext CreateDbContext()
-    {
-        var context = new CodeflixCatalogDbContext(
-            new DbContextOptionsBuilder<CodeflixCatalogDbContext>()
-            .UseInMemoryDatabase("end2end-tests-db")
-            .Options
-        );
-        return context;
+        public BaseFixture()
+        {
+            Faker = new Faker("pt_BR");
+            WebAppFactory = new CustomWebApplicationFactory<Program>();  
+            HttpClient = WebAppFactory.CreateClient();  
+            ApiClient = new ApiClient(HttpClient);
+        }
+
+        public CodeflixCatalogDbContext CreateDbContext()
+        {
+            var context = new CodeflixCatalogDbContext(
+                new DbContextOptionsBuilder<CodeflixCatalogDbContext>()
+                .UseInMemoryDatabase("end2end-tests-db")
+                .Options
+            );
+            return context;
+        }
     }
 }

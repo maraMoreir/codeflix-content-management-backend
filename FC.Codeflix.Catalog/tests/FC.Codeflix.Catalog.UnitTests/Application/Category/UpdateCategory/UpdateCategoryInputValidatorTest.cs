@@ -25,7 +25,7 @@ public class UpdateCategoryInputValidatorTest
         validateResult.IsValid.Should().BeFalse();
         validateResult.Errors.Should().HaveCount(1);
         validateResult.Errors[0].ErrorMessage
-            .Should().Be("'Id' deve ser informado.");
+            .Should().Be("'Id' must not be empty.");
     }
 
     [Fact(DisplayName = nameof(ValidateWhenValid))]
