@@ -1,5 +1,6 @@
 ﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using FluentAssertions;
+using System.Net;
 using Xunit;
 
 namespace FC.Codeflix.Catalog.EndToEnd.Tests.Api.Category.CreateCategory;
@@ -25,7 +26,7 @@ public class CreateCategoryApiTest
             );
 
         response.Should().NotBeNull();
-        response!.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+        response!.StatusCode.Should().Be(HttpStatusCode.Created);
         output.Should().NotBeNull();
         output!.Name.Should().Be(input.Name);
         output.Description.Should().Be(input.Description);
