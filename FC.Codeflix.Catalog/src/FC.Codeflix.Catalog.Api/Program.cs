@@ -9,6 +9,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services
+            .AddConections()
             .AddUseCases()
             .AddAndConfigureControllers();
 

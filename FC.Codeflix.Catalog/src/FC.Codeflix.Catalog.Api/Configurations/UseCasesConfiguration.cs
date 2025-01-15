@@ -12,7 +12,7 @@ public static class UseCasesConfiguration
     public static IServiceCollection AddUseCases(
         this IServiceCollection services
     ) {
-        services.AddMediatR(typeof(CreateCategory));
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(CreateCategory).Assembly));
         services.AddRepositories();
         return services;
     }
