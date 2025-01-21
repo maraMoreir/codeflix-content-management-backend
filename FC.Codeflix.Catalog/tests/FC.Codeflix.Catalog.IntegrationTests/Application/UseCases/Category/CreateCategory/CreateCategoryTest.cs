@@ -1,5 +1,4 @@
 ﻿using ApplicationUseCases = FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
-using FC.Codeflix.Catalog.IntegrationTests.Infra.Data.EF.Repositories.CategoryRepository;
 using FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
 using FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
 using FC.Codeflix.Catalog.Infra.Data.EF;

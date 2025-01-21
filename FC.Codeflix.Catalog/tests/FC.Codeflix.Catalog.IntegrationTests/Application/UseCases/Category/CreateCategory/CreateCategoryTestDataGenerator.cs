@@ -1,6 +1,4 @@
-﻿using FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Category.CreateCategory;
-
-namespace FC.Codeflix.Catalog.IntegrationTests.Infra.Data.EF.Repositories.CategoryRepository;
+﻿namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Category.CreateCategory;
 public class CreateCategoryTestDataGenerator
 {
     public static IEnumerable<object[]> GetInvalidInputs(int times = 12)
@@ -34,7 +32,7 @@ public class CreateCategoryTestDataGenerator
                 case 3:
                     invalidInputsList.Add(new object[] {
                         fixture.GetInvalidInputTooLongDescription(),
-                        "Description should be less or equal 10_000 characters long"                  
+                        "Description should be less or equal 10_000 characters long"
                     });
                     break;
                 default:
