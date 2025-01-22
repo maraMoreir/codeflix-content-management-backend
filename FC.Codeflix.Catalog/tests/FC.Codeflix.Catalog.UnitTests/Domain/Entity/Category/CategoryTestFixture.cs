@@ -1,7 +1,7 @@
-﻿using Bogus;
+﻿using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.UnitTests.Common;
+using Bogus;
 using Xunit;
-using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 
 namespace FC.Codeflix.Catalog.UnitTests.Domain.Entity.Category;
 public class CategoryTestFixture : BaseFixture

@@ -1,6 +1,7 @@
-﻿using Xunit;
+﻿using FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
 using FluentAssertions;
-using FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
+using Xunit;
+
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.Category.UpdateCategory;
 

@@ -1,8 +1,8 @@
-﻿using FC.Codeflix.Catalog.Application.Interfaces;
+﻿using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
+using FC.Codeflix.Catalog.Application.Interfaces;
 using FC.Codeflix.Catalog.Domain.Repository;
 using FC.Codeflix.Catalog.UnitTests.Common;
 using Moq;
-using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.Category.Common;
 public abstract class CategoryUseCasesBaseFixture

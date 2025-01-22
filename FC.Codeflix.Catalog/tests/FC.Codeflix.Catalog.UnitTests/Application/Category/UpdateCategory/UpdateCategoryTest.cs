@@ -1,12 +1,12 @@
-﻿using FC.Codeflix.Catalog.Application.Excpetion;
-using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+﻿using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
 using FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
+using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
+using FC.Codeflix.Catalog.Application.Excpetion;
 using FC.Codeflix.Catalog.Domain.Exceptions;
 using FluentAssertions;
-using Moq;
 using Xunit;
-using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
+using Moq;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.Category.UpdateCategory;
 
@@ -30,29 +30,23 @@ public class UpdateCategoryTest
         UpdateCategoryInput input
     )
     {
-        // Arrange
         var repositoryMock = _fixture.GetRepositoryMock();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
-
         repositoryMock.Setup(x => x.Get(
             exampleCategory.Id,
             It.IsAny<CancellationToken>())
         ).ReturnsAsync(exampleCategory);
-
         var useCase = new UseCase.UpdateCategory(
             repositoryMock.Object,
             unitOfWorkMock.Object
         );
 
-        // Act
         CategoryModelOutut output = await useCase.Handle(input, CancellationToken.None);
 
-        // Assert
         output.Should().NotBeNull();
         output.Name.Should().Be(input.Name);
         output.Description.Should().Be(input.Description);
         output.IsActive.Should().Be((bool)input.IsActive!);
-
         repositoryMock.Verify(x => x.Get(
             exampleCategory.Id,
             It.IsAny<CancellationToken>()
@@ -74,7 +68,6 @@ public class UpdateCategoryTest
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
         var exampleGuidId = Guid.NewGuid();
         var input = _fixture.GetValidInput();
-
         repositoryMock.Setup(x => x.Get(
             input.Id,
             It.IsAny<CancellationToken>())
@@ -88,7 +81,6 @@ public class UpdateCategoryTest
         var task = async ()
             => await useCase.Handle(input, CancellationToken.None);
         await task.Should().ThrowAsync<NotFoundException>();
-
         repositoryMock.Verify(x => x.Get(
             input.Id,
             It.IsAny<CancellationToken>()
@@ -107,7 +99,6 @@ public class UpdateCategoryTest
         UpdateCategoryInput exampleInput
     )
     {
-        // Arrange
         var input = new UpdateCategoryInput(
         exampleInput.Id,
         exampleInput.Name,
@@ -115,7 +106,6 @@ public class UpdateCategoryTest
         );
         var repositoryMock = _fixture.GetRepositoryMock();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
-
         repositoryMock.Setup(x => x.Get(
             exampleCategory.Id,
             It.IsAny<CancellationToken>())
@@ -126,15 +116,12 @@ public class UpdateCategoryTest
             unitOfWorkMock.Object
         );
 
-        // Act
         CategoryModelOutut output = await useCase.Handle(input, CancellationToken.None);
 
-        // Assert
         output.Should().NotBeNull();
         output.Name.Should().Be(input.Name);
         output.Description.Should().Be(input.Description);
         output.IsActive.Should().Be(exampleCategory.IsActive);
-
         repositoryMock.Verify(x => x.Get(
             exampleCategory.Id,
             It.IsAny<CancellationToken>()
@@ -160,33 +147,27 @@ public class UpdateCategoryTest
         UpdateCategoryInput exampleInput
     )
     {
-        // Arrange
         var input = new UpdateCategoryInput(
         exampleInput.Id,
         exampleInput.Name
         );
         var repositoryMock = _fixture.GetRepositoryMock();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
-
         repositoryMock.Setup(x => x.Get(
             exampleCategory.Id,
             It.IsAny<CancellationToken>())
         ).ReturnsAsync(exampleCategory);
-
         var useCase = new UseCase.UpdateCategory(
             repositoryMock.Object,
             unitOfWorkMock.Object
         );
 
-        // Act
         CategoryModelOutut output = await useCase.Handle(input, CancellationToken.None);
 
-        // Assert
         output.Should().NotBeNull();
         output.Name.Should().Be(input.Name);
         output.Description.Should().Be(exampleCategory.Description);
         output.IsActive.Should().Be(exampleCategory.IsActive);
-
         repositoryMock.Verify(x => x.Get(
             exampleCategory.Id,
             It.IsAny<CancellationToken>()
@@ -212,29 +193,23 @@ public class UpdateCategoryTest
        UpdateCategoryInput input
    )
     {
-        // Arrange
         var repositoryMock = _fixture.GetRepositoryMock();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
-
         repositoryMock.Setup(x => x.Get(
             exampleCategory.Id,
             It.IsAny<CancellationToken>())
         ).ReturnsAsync(exampleCategory);
-
         var useCase = new UseCase.UpdateCategory(
             repositoryMock.Object,
             unitOfWorkMock.Object
         );
 
-        // Act
         CategoryModelOutut output = await useCase.Handle(input, CancellationToken.None);
 
-        // Assert
         output.Should().NotBeNull();
         output.Name.Should().Be(input.Name);
         output.Description.Should().Be(input.Description);
         output.IsActive.Should().Be((bool)input.IsActive!);
-
         repositoryMock.Verify(x => x.Get(
             exampleCategory.Id,
             It.IsAny<CancellationToken>()
@@ -264,7 +239,6 @@ public class UpdateCategoryTest
         input.Id = exampleCategory.Id;
         var repositoryMock = _fixture.GetRepositoryMock();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
-
         repositoryMock.Setup(x => x.Get(
             exampleCategory.Id,
             It.IsAny<CancellationToken>())
@@ -277,10 +251,8 @@ public class UpdateCategoryTest
 
         var task = async ()
             => await useCase.Handle(input, CancellationToken.None);
-
         await task.Should().ThrowAsync<EntityValidationException>()
             .WithMessage(expectedExceptionMessage);
-
         repositoryMock.Verify(x => x.Get(
             exampleCategory.Id,
             It.IsAny<CancellationToken>()),

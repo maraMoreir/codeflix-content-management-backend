@@ -1,6 +1,4 @@
-﻿using Bogus.DataSets;
-
-namespace FC.Codeflix.Catalog.UnitTests.Application.Category.CreateCategory;
+﻿namespace FC.Codeflix.Catalog.UnitTests.Application.Category.CreateCategory;
 public class CreateCategoryTestDataGenerator
 {
     public static IEnumerable<object[]> GetInvalidInputs(int times = 12)
