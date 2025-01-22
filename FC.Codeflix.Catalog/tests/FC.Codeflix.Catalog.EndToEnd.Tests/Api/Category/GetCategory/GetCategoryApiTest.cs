@@ -2,6 +2,7 @@
 using FC.Codeflix.Catalog.EndToEnd.Tests.Api.Category.GetCategory;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Xunit;
 
@@ -38,5 +39,29 @@ public class GetCategoryApiTest
         output.Description.Should().Be(exampleCategory.Description);
         output.IsActive.Should().Be(exampleCategory.IsActive);
         output.CreatedAt.Should().Be(exampleCategory.CreatedAt);
+    }
+
+    [Fact(DisplayName = nameof(ThrowWhenNotFound))]
+    [Trait("EndToEnd/API", "Category/Get - Endpoints")]
+    public async Task ThrowWhenNotFound()
+    {
+        //arrange: generate a list of 20 exampple de categories
+        var exampleCategoriesList = _fixture.GetExampleCategoryList(20);
+        await _fixture.Persistence.InsertList(exampleCategoriesList);
+        var randomGuid = Guid.NewGuid();
+
+        //act: get a category using radom GUID
+        var (response, output) = await _fixture.ApiClient.Get<ProblemDetails>(
+            $"/categories/{randomGuid}"
+        );
+
+        //assert: check the search result
+        response.Should().NotBeNull();
+        response!.StatusCode.Should().Be((HttpStatusCode)StatusCodes.Status404NotFound);
+        output.Should().NotBeNull();
+        output!.Status.Should().Be((int)StatusCodes.Status404NotFound);
+        output.Title.Should().Be("Not Found");
+        output.Type.Should().Be("Not Found");
+        output.Detail.Should().Be($"Category '{randomGuid}' not found.");
     }
 }

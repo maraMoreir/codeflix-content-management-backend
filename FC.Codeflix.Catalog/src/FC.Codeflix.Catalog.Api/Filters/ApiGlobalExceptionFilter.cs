@@ -1,6 +1,7 @@
 ﻿using FC.Codeflix.Catalog.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
+using FC.Codeflix.Catalog.Application.Excpetion;
 
 namespace FC.Codeflix.Catalog.Api.Filters;
 
@@ -20,12 +21,19 @@ public class ApiGlobalExceptionFilter : IExceptionFilter
 
         if(exception is EntityValidationException)
         {
-            var ex = exception as EntityValidationException;
             details.Title = "One or more validation erros ocurred";
             details.Status = StatusCodes.Status422UnprocessableEntity;
             details.Type = "UnprocessableEntity";
-            details.Detail = ex!.Message;
-        } else
+            details.Detail = exception!.Message;
+        } 
+        else if (exception is NotFoundException)
+        {
+            details.Title = "Not Found";
+            details.Status = StatusCodes.Status404NotFound;
+            details.Type = "Not Found";
+            details.Detail = exception!.Message;
+        }
+        else
         {
             details.Title = "An unexpected error ocurred";
             details.Status = StatusCodes.Status422UnprocessableEntity;
