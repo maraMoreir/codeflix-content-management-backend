@@ -1,5 +1,6 @@
 using FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
 using FC.Codeflix.Catalog.Application.UseCases.Category.DeleteCategory;
+using FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
 using FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
 using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,18 @@ public class CategoriesController : ControllerBase
             new {id = output.Id},
             output
         );
+    }
+
+    [HttpPut("{id:guid}")]
+    [ProducesResponseType(typeof(CategoryModelOutut), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Update(
+        [FromBody] UpdateCategoryInput input,
+        CancellationToken cancellationToken
+    )
+    {
+        var output = await _mediator.Send(input, cancellationToken);
+        return Ok(output);
     }
 
     [HttpGet("{id:guid}")]
