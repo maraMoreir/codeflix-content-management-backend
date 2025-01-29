@@ -1,10 +1,9 @@
-﻿namespace FC.Codeflix.Catalog.EndToEnd.Tests.Api.Category.CreateCategory;
-public class CreateCategoryApiTestDataGenerator
+﻿namespace FC.Codeflix.Catalog.EndToEnd.Tests.Api.Category.UpdateCategory;
+public class UpdateCategoryApiTestDataGenerator
 {
     public static IEnumerable<object[]> GetInvalidInputs()
-    {
-        int times = 4;
-        var fixture = new CreateCategoryApiTestFixture();
+    { 
+        var fixture = new UpdateCategoryApiTestFixture();
         var invalidInputsList = new List<object[]>();
         var totalInvalidCases = 4;
 
@@ -13,7 +12,7 @@ public class CreateCategoryApiTestDataGenerator
             switch (index % totalInvalidCases)
             {
                 case 0:
-                    var input1 = fixture.getExampleInput();
+                    var input1 = fixture.GetExampleInput();
                     input1.Name = fixture.GetInvalidNameTooShort();
                     invalidInputsList.Add(new object[] {
                         input1,
@@ -21,7 +20,7 @@ public class CreateCategoryApiTestDataGenerator
                     });
                     break;
                 case 1:
-                    var input2 = fixture.getExampleInput();
+                    var input2 = fixture.GetExampleInput();
                     input2.Name = fixture.GetInvalidNameTooLong();
                     invalidInputsList.Add(new object[] {
                          input2,
@@ -29,7 +28,7 @@ public class CreateCategoryApiTestDataGenerator
                     });
                     break;
                 case 2:
-                    var input3 = fixture.getExampleInput();
+                    var input3 = fixture.GetExampleInput();
                     input3.Description = fixture.GetInvalidDescriptionTooLong();
                     invalidInputsList.Add(new object[] {
                          input3,
@@ -40,7 +39,6 @@ public class CreateCategoryApiTestDataGenerator
                     break;
             }
         }
-
         return invalidInputsList;
     }
 }
