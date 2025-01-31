@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
-using System.Net.Http;
-using FC.Codeflix.Catalog.Infra.Data.EF;
-using Bogus;
+﻿using FC.Codeflix.Catalog.Infra.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using FC.Codeflix.Catalog.Api;
+using Bogus;
 
 namespace FC.Codeflix.Catalog.EndToEnd.Tests.Base
 {
@@ -30,6 +28,13 @@ namespace FC.Codeflix.Catalog.EndToEnd.Tests.Base
                 .Options
             );
             return context;
+        }
+
+        public void CleanPersistence()
+        {
+            var context = CreateDbContext();
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
         }
     }
 }

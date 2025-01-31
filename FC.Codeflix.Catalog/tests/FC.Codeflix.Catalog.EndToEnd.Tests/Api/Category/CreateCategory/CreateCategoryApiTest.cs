@@ -1,8 +1,8 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
-using FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
-using FluentAssertions;
+﻿using FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
+using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using FluentAssertions;
 using System.Net;
 using Xunit;
 
@@ -10,6 +10,7 @@ namespace FC.Codeflix.Catalog.EndToEnd.Tests.Api.Category.CreateCategory;
 
 [Collection(nameof(CreateCategoryApiTestFixture))]
 public class CreateCategoryApiTest
+    : IDisposable
 {
     private readonly CreateCategoryApiTestFixture _fixture;
 
@@ -72,4 +73,7 @@ public class CreateCategoryApiTest
         output.Status.Should().Be((int)StatusCodes.Status422UnprocessableEntity);
         output.Detail.Should().Be(expectedDetail);
     }
+
+    public void Dispose()
+        => _fixture.CleanPersistence();
 }

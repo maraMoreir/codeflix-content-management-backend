@@ -9,6 +9,7 @@ namespace FC.Codeflix.Catalog.EndToEnd.Tests.Api.Category.ListCategories;
 
 [Collection(nameof(ListCategoryApiTestFixture))]
 public class ListCategoryApiTest
+    : IDisposable
 {
     private readonly ListCategoryApiTestFixture _fixture;
 
@@ -42,4 +43,7 @@ public class ListCategoryApiTest
             outputItem.CreatedAt.Should().Be(exampleItem.CreatedAt);
         }
     }
+
+    public void Dispose()
+        => _fixture.CleanPersistence();
 }
