@@ -1,7 +1,7 @@
-﻿using FC.Codeflix.Catalog.Application.Excpetion;
-using FC.Codeflix.Catalog.Domain.Entity;
+﻿using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
+using FC.Codeflix.Catalog.Application.Excpetion;
 using FC.Codeflix.Catalog.Domain.Repository;
-using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
+using FC.Codeflix.Catalog.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
@@ -60,14 +60,18 @@ public class CategoryRepository
         string orderProperty,
         SearchOrder order
     )
-        => (orderProperty.ToLower(), order) switch
-        {
-            ("name", SearchOrder.Asc) => query.OrderBy(x => x.Name),
-            ("name", SearchOrder.Desc) => query.OrderByDescending(x => x.Name),
-            ("id", SearchOrder.Asc) => query.OrderBy(x => x.Id),
-            ("id", SearchOrder.Desc) => query.OrderByDescending(x => x.Id),
-            ("createdat", SearchOrder.Asc) => query.OrderBy(x => x.CreatedAt),
-            ("createdat", SearchOrder.Desc) => query.OrderByDescending(x => x.CreatedAt),
-            _ => query.OrderBy(x => x.Name)
-        };
+    {
+        var orderedQuery = (orderProperty.ToLower(), order) switch
+            {
+                ("name", SearchOrder.Asc) => query.OrderBy(x => x.Name),
+                ("name", SearchOrder.Desc) => query.OrderByDescending(x => x.Name),
+                ("id", SearchOrder.Asc) => query.OrderBy(x => x.Id),
+                ("id", SearchOrder.Desc) => query.OrderByDescending(x => x.Id),
+                ("createdat", SearchOrder.Asc) => query.OrderBy(x => x.CreatedAt),
+                ("createdat", SearchOrder.Desc) => query.OrderByDescending(x => x.CreatedAt),
+                _ => query.OrderBy(x => x.Name)
+            };
+        return orderedQuery.ThenBy(x => x.CreatedAt);
+    }
+       
 }
