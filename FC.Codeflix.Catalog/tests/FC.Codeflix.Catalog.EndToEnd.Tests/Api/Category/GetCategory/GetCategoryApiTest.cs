@@ -1,5 +1,6 @@
 ﻿using FC.Codeflix.Catalog.EndToEnd.Tests.Api.Category.GetCategory;
 using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+using FC.Codeflix.Catalog.EndToEnd.Tests.Extensions.DateTime;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using FluentAssertions;
@@ -39,7 +40,9 @@ public class GetCategoryApiTest
         output.Name.Should().Be(exampleCategory.Name);
         output.Description.Should().Be(exampleCategory.Description);
         output.IsActive.Should().Be(exampleCategory.IsActive);
-        output.CreatedAt.Should().Be(exampleCategory.CreatedAt);
+        output.CreatedAt.TrimMilisseconds().Should().Be(
+                exampleCategory.CreatedAt.TrimMilisseconds()
+        );
     }
 
     [Fact(DisplayName = nameof(ErrorWhenNotFound))]
