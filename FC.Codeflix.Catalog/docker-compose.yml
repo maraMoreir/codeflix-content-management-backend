@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 
 services:
   fc.codeflix.catalog.fb:
@@ -6,10 +6,12 @@ services:
     hostname: catalogdb
     image: mysql
     ports:
-        - 3306:3306
+      - "3306:3306"
     environment:
-        MYSQL_ROOT_PASSWORD: C0D3fl1X.@
+      MYSQL_ROOT_PASSWORD: C0D3fl1X.@
+    networks:
+      - service_catalog
+
 networks:
-  default:
-    external:
-      name: service_catalog
+  service_catalog:
+    name: service_catalog

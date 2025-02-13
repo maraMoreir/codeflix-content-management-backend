@@ -3,7 +3,6 @@ public class CreateCategoryApiTestDataGenerator
 {
     public static IEnumerable<object[]> GetInvalidInputs()
     {
-        int times = 4;
         var fixture = new CreateCategoryApiTestFixture();
         var invalidInputsList = new List<object[]>();
         var totalInvalidCases = 4;
