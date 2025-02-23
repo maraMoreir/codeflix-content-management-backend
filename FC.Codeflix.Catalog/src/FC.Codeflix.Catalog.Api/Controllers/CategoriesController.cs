@@ -5,6 +5,7 @@ using FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
 using FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+using FC.Codeflix.Catalog.Api.ApiModels.Response;
 using FC.Codeflix.Catalog.Api.ApiModels.Category;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
@@ -19,7 +20,7 @@ public class CategoriesController : ControllerBase
         => _mediator = mediator;
 
     [HttpPost]
-    [ProducesResponseType(typeof(CategoryModelOutut), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiResponse<CategoryModelOutut>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Create(
@@ -31,12 +32,12 @@ public class CategoriesController : ControllerBase
         return CreatedAtAction(
             nameof(Create),
             new {id = output.Id},
-            output
+            new ApiResponse<CategoryModelOutut>(output)
         );
     }
 
     [HttpPut("{id:guid}")]
-    [ProducesResponseType(typeof(CategoryModelOutut), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<CategoryModelOutut>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Update(
@@ -52,11 +53,11 @@ public class CategoriesController : ControllerBase
             apiInput.IsActive
         );
         var output = await _mediator.Send(input, cancellationToken);
-        return Ok(output);
+        return Ok(new ApiResponse<CategoryModelOutut>(output));
     }
 
     [HttpGet("{id:guid}")]
-    [ProducesResponseType(typeof(CategoryModelOutut), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<CategoryModelOutut>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(
        [FromRoute] Guid id,
@@ -64,7 +65,7 @@ public class CategoriesController : ControllerBase
     )
     {
         var output = await _mediator.Send(new GetCategoryInput(id), cancellationToken);
-        return Ok(output);
+        return Ok(new ApiResponse<CategoryModelOutut>(output));
     }
 
     [HttpDelete("{id:guid}")]
