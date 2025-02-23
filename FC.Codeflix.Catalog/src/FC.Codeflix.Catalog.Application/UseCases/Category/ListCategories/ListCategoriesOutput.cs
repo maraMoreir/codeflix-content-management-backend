@@ -1,5 +1,5 @@
-﻿using FC.Codeflix.Catalog.Application.Common;
-using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+using FC.Codeflix.Catalog.Application.Common;
 
 namespace FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
 public class ListCategoriesOutput
