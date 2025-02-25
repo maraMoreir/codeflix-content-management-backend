@@ -10,11 +10,26 @@ public class Genre
         Name = name;
         IsActive = isActive;
         CreatedAt = DateTime.Now;
+
+        Validate();
     }
 
-    public void Activate()  => IsActive = true;
-    public void Deactivate() => IsActive = false;
+    public void Activate()
+    {
+        IsActive = true;
+        Validate();
+    }
+    public void Deactivate()
+    {
+        IsActive = false;
+        Validate();
+    }
     public void Update(string name)
-        => Name  = name;
+    {
+        Name = name;
+        Validate();
+    }
+    private void Validate()
+        => DomainValidation.NotNullOrEmpty(Name, nameof(Name));
 
 }
