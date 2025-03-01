@@ -180,4 +180,25 @@ public class GenreTest
         genre.Categories.Should().HaveCount(4);
         genre.Categories.Should().NotContain(exampleGuid);
     }
+
+    [Fact(DisplayName = nameof(RemoveAllCategories))]
+    [Trait("Domain", "Genre - Aggregates")]
+    public void RemoveAllCategories()
+    {
+        var exampleGuid = Guid.NewGuid();
+        var genre = _fixture.GetExampleGenre(
+            categoriesIdList: new List<Guid>()
+            {
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                Guid.NewGuid()
+            }
+        );
+
+        genre.RemoveAllCategories();
+
+        genre.Categories.Should().HaveCount(0);
+    }
 }
