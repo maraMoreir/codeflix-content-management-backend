@@ -16,7 +16,7 @@ public class UpdateCategoryTestFixture
             id ?? Guid.NewGuid(),
             GetValidCategoryName(),
             GetValidCategoryDescription(),
-            getRandomBoolean());
+            GetRandomBoolean());
     public UpdateCategoryInput GetInvalidInputShortName()
     {
         var invalidInputShortName = GetValidInput();

@@ -32,13 +32,11 @@ public abstract class CategoryUseCasesBaseFixture
         return categoryDescription;
 
     }
-    public bool getRandomBoolean()
-        => new Random().NextDouble() < 0.5;
 
     public DomainEntity.Category GetExampleCategory()
     => new(
         GetValidCategoryName(),
         GetValidCategoryDescription(),
-        getRandomBoolean()
+        GetRandomBoolean()
     );
 }
