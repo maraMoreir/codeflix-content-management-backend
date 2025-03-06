@@ -1,5 +1,8 @@
-﻿namespace FC.Codeflix.Catalog.Domain.Entity;
-public class Genre
+﻿using FC.Codeflix.Catalog.Domain.SeedWork;
+
+namespace FC.Codeflix.Catalog.Domain.Entity;
+public class Genre 
+    : AggregateRoot
 {
     public string Name { get; private set; }
     public bool IsActive { get; private set; }
@@ -52,5 +55,4 @@ public class Genre
     }
     private void Validate()
         => DomainValidation.NotNullOrEmpty(Name, nameof(Name));
-
 }
